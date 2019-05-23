@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <!-- Semantic UI -->
+  <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script src="semantic/dist/semantic.min.js"></script>
+  <!-- /Semantic UI -->
+  <!-- Chart.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <!-- /Chart.js -->
+  <link rel="stylesheet" href="master.css">
+  <title>Dice Statistics</title>
+</head>
+<body>
+  <div class="ui wide sidebar vertical menu scale down">
+    <div class="item">
+      <h1>
+        <div class="header">
+          <i class="cogs icon"></i>
+          Simulation
+        </div>
+      </h1>
+
+    </div>
+    <div class="item">
+      <div class="field">
+        <label>Type of dice</label>
+        <div id="dice-type-dropdown" class="ui fluid search selection dropdown">
+          <input name="dice-type" type="hidden">
+          <div class="default text">Select a value</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="3">3 (three, d3)</div>
+            <div class="item" data-value="4">4 (four, tetrahedron, d4)</div>
+            <div class="item" data-value="5">5 (five, d5)</div>
+            <div class="item" data-value="6">6 (six, cubical die, d6)</div>
+            <div class="item" data-value="7">7 (seven, d7)</div>
+            <div class="item" data-value="8">8 (eight, octahedron, d8)</div>
+            <div class="item" data-value="9">9 (nine, d9)</div>
+            <div class="item" data-value="10">10 (ten, pentagonal trapezohedron, d10)</div>
+            <div class="item" data-value="11">11 (eleven, d11)</div>
+            <div class="item" data-value="12">12 (twelve, dodecahedron, d12)</div>
+            <div class="item" data-value="13">13 (thirteen, d13)</div>
+            <div class="item" data-value="18">18 (eighteen, d18)</div>
+            <div class="item" data-value="19">19 (nineteen, d19)</div>
+            <div class="item" data-value="20">20 (twenty, icosahedron, d20)</div>
+            <div class="item" data-value="30">30 (thirty, triantakohedron, d30)</div>
+            <div class="item" data-value="100">100 (one hundered, d100)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="field">
+        <label>Number of dice</label>
+        <div id="dice-number-dropdown" class="ui fluid search selection dropdown">
+          <input name="dice-number" type="hidden">
+          <div class="default text">Select a value</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item" data-value="1">1</div>
+            <div class="item" data-value="2">2</div>
+            <div class="item" data-value="3">3</div>
+            <div class="item" data-value="4">4</div>
+            <div class="item" data-value="5">5</div>
+            <div class="item" data-value="6">6</div>
+            <div class="item" data-value="7">7</div>
+            <div class="item" data-value="8">8</div>
+            <div class="item" data-value="9">9</div>
+            <div class="item" data-value="10">10</div>
+            <div class="item" data-value="11">11</div>
+            <div class="item" data-value="12">12</div>
+            <div class="item" data-value="13">13</div>
+            <div class="item" data-value="14">14</div>
+            <div class="item" data-value="15">15</div>
+            <div class="item" data-value="16">16</div>
+            <div class="item" data-value="17">17</div>
+            <div class="item" data-value="18">18</div>
+            <div class="item" data-value="19">19</div>
+            <div class="item" data-value="20">20</div>
+            <div class="item" data-value="21">21</div>
+            <div class="item" data-value="22">22</div>
+            <div class="item" data-value="23">23</div>
+            <div class="item" data-value="24">24</div>
+            <div class="item" data-value="25">25</div>
+            <div class="item" data-value="26">26</div>
+            <div class="item" data-value="27">27</div>
+            <div class="item" data-value="28">28</div>
+            <div class="item" data-value="29">29</div>
+            <div class="item" data-value="30">30</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <button class="ui right labeled icon button sidebar-toggle">
+        <i class="right arrow icon"></i>
+        Simulate
+      </button>
+    </div>
+  </div>
+  <div class="pusher">
+    <button class="ui icon button sidebar-toggle">
+      <i class="cogs large icon"></i>
+    </button>
+    <div class="ui segment">
+      <div class="ui two column very relaxed stackable grid">
+        <div class="column">
+          <div class="chart schart">
+            <canvas id="simulation-chart"></canvas>
+          </div>
+        </div>
+        <div class="column">
+          <div class="chart pchart">
+            <canvas id="dice-chart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="ui vertical divider"></div>
+    </div>
+    <div class="chart sumchart">
+      <canvas id="sum-chart"></canvas>
+    </div>
+  </div>
+  <script src="master.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+html, body {
+  height: 100%;
+}
+
+.chart {
+  margin: auto;
+}
+
+/* Simulation Chart */
+.schart {
+  width: 100%;
+}
+
+/* Probability Chart */
+.pchart {
+  width: 100%;
+}
+
+/* Sum Chart */
+.sumchart {
+  width: 25%;
+}
+
+.number {
+  width: 50px;
+}
+
+.ui.vertical.menu {
+  width: 16rem;
+  padding: 10px;
+}
+
+.form {
+
+}
+
+.btn-param {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.sidebar-toggle {
+  
+}
