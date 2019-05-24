@@ -44,12 +44,11 @@ function update_probability_chart(min, max, data) {
   pchart.data.datasets[0].data = d;
   pchart.data.datasets[0].backgroundColor = _.fill(Array(d.length+1), neutral_color);
   pchart.data.datasets[0].backgroundColor[pos-min] = primary_color;
-  console.table(pchart.data.backgroundColor);
   pchart.update();
 
-
   $('#sum').text(pos);
-  $('#minproba').text(d[0].toFixed(3));
+  var minproba = (d[0] > 0.001) ? d[0].toFixed(4) : d[0].toExponential(3);
+  $('#minproba').text(minproba);
   $('#proba').text(d[pos-min].toPrecision(4));
   $('#maxproba').text(d[Math.floor((d.length-1)/2)].toFixed(3));
 
