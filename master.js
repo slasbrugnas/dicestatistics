@@ -1,6 +1,5 @@
 $(document).ready(function() {
 var primary_color = "rgb(54, 162, 235)";
-var secondary_color = "rgb(255, 99, 132)";
 var neutral_color = "rgb(230,230,230)";
 
 /* Update all charts and texts */
@@ -39,19 +38,25 @@ function update_probability_chart(min, max, data) {
     d.push((dicePossibilities(i, min, (max/min))*100));
   }
 
+  var pos = _.sum(data);
+
   pchart.data.labels = labels;
   pchart.data.datasets[0].data = d;
+  pchart.data.datasets[0].backgroundColor = _.fill(Array(d.length+1), neutral_color);
+  pchart.data.datasets[0].backgroundColor[pos-min] = primary_color;
+  console.table(pchart.data.backgroundColor);
   pchart.update();
 
-  var pos = _.sum(data);
 
   $('#sum').text(pos);
   $('#minproba').text(d[0].toFixed(3));
   $('#proba').text(d[pos-min].toPrecision(4));
   $('#maxproba').text(d[Math.floor((d.length-1)/2)].toFixed(3));
+
   var luck = (1/(d[pos-min]/100)).toFixed(2);
   var luck_rounded = _.toInteger(luck);
   luck = ((luck - luck_rounded) === 0) ? luck_rounded : luck;
+
   $('#luck').text(luck);
 }
 
@@ -95,7 +100,7 @@ var pchart = new Chart(ctx, {
         data: [],
         fill: false,
         pointRadius: 4,
-        backgroundColor: primary_color,
+        backgroundColor: [],
         lineTension: 0.1
       }
     ]
