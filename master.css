@@ -2,6 +2,10 @@ html, body {
   height: 100%;
 }
 
+.pusher {
+  background: #fafafa !important;
+}
+
 .chart {
   margin: auto;
 }
@@ -18,7 +22,7 @@ html, body {
 
 /* Sum Chart */
 .sumchart {
-  width: 25%;
+  width: 67%;
 }
 
 .number {
@@ -41,5 +45,18 @@ html, body {
 }
 
 .sidebar-toggle {
-  
+
+}
+
+.stats, .retry {
+  margin: auto;
+  width: fit-content;
+}
+
+.ui.statistic>.pico, .ui.statistics .statistic>.pico {
+  font-size: 1rem!important;
+}
+
+.divider-black {
+  border: 1px solid black !important;
 }

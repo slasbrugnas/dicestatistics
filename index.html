@@ -14,7 +14,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
   <!-- /Chart.js -->
+  <!-- lodash -->
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+  <!-- /lodash -->
+  <!-- Quick maths -->
+  <script src="probabilities.js"></script>
+  <!-- /Quick maths -->
   <link rel="stylesheet" href="master.css">
+  <script src="master.js"></script>
+
   <title>Dice Statistics</title>
 </head>
 <body>
@@ -84,27 +92,18 @@
             <div class="item" data-value="18">18</div>
             <div class="item" data-value="19">19</div>
             <div class="item" data-value="20">20</div>
-            <div class="item" data-value="21">21</div>
-            <div class="item" data-value="22">22</div>
-            <div class="item" data-value="23">23</div>
-            <div class="item" data-value="24">24</div>
-            <div class="item" data-value="25">25</div>
-            <div class="item" data-value="26">26</div>
-            <div class="item" data-value="27">27</div>
-            <div class="item" data-value="28">28</div>
-            <div class="item" data-value="29">29</div>
-            <div class="item" data-value="30">30</div>
           </div>
         </div>
       </div>
     </div>
     <div class="item">
-      <button class="ui right labeled icon button sidebar-toggle">
+      <button id="update-charts" class="ui right labeled icon button sidebar-toggle">
         <i class="right arrow icon"></i>
         Simulate
       </button>
     </div>
   </div>
+
   <div class="pusher">
     <button class="ui icon button sidebar-toggle">
       <i class="cogs large icon"></i>
@@ -122,12 +121,91 @@
           </div>
         </div>
       </div>
-      <div class="ui vertical divider"></div>
     </div>
-    <div class="chart sumchart">
-      <canvas id="sum-chart"></canvas>
+
+    <div class="ui two column very relaxed stackable grid">
+      <div class="column">
+        <div class="ui segment">
+          <div class="ui two column stackable center aligned grid">
+            <div class="ui vertical divider">Or</div>
+            <div class="middle aligned row">
+              <div class="column">
+                <div class="stats">
+                  <div class="ui small horizontal statistic">
+                    <div class="value">
+                      <span id="sum"></span>
+                    </div>
+                    <div class="label">
+                      Sum
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui divider"></div>
+
+                <div class="stats">
+                  <div class="ui statistic">
+                    <div class="value pico">
+                      <span id="minproba"></span>%
+                    </div>
+                    <div class="label">
+                      min
+                    </div>
+                  </div>
+
+                  <div class="ui tiny statistic">
+                    <div class="value">
+                      <span id="proba"></span>%
+                    </div>
+                    <div class="label">
+                      Result
+                    </div>
+                  </div>
+
+                  <div class="ui statistic">
+                    <div class="value pico">
+                      <span id="maxproba"></span>%
+                    </div>
+                    <div class="label">
+                      max
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="column">
+                <div class="stats">
+                  <div class="ui small statistic">
+                    <div class="value">
+                      <p style="margin:0">1</p>
+                      <div class="ui divider divider-black"></div>
+                      <span id="luck"></span>
+                    </div>
+                    <div class="label">
+                      Chance
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="ui horizontal divider header">
+          Retry
+        </h4>
+        <div class="retry">
+          <button id="btn-retry" class="ui icon button">
+            <i class="icon undo alternate"></i>
+          </button>
+        </div>
+      </div>
+      <div class="column">
+        <div class="chart sumchart">
+          <canvas id="sum-chart"></canvas>
+        </div>
+      </div>
     </div>
   </div>
-  <script src="master.js"></script>
 </body>
 </html>

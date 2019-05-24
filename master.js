@@ -1,6 +1,64 @@
+$(document).ready(function() {
+var primary_color = "rgb(54, 162, 235)";
+var secondary_color = "rgb(255, 99, 132)";
+var neutral_color = "rgb(230,230,230)";
+
+/* Update all charts and texts */
+$('#update-charts, #btn-retry').on('click', function() {
+  var max = _.toInteger($('#dice-type-dropdown > .menu > .active').attr('data-value'));
+  var nb_dice = _.toInteger($('#dice-number-dropdown > .menu > .active').attr('data-value'));
+  var labels = _.range(1, (nb_dice+1));
+  var data = [];
+  var sum = 0;
+  for (var i = 0; i < nb_dice; i++) {
+    data.push(Math.floor(Math.random() * max) + 1);
+    sum += data[i];
+  }
+  update_simulate_chart (labels, max, data);
+  update_sum_chart(sum, data.length * max);
+  update_probability_chart(nb_dice, nb_dice * max, data);
+});
+
+function update_simulate_chart(labels, max, data) {
+  schart.data.labels = labels;
+  schart.data.datasets[0].data = data;
+  schart.options.scales.yAxes[0].ticks.max = max;
+  schart.update();
+}
+
+function update_sum_chart(sum, max) {
+  var remainder = (max-sum > 0)? max-sum : sum-max;
+  sumchart.data.datasets[0].data = [sum, remainder];
+  sumchart.update();
+}
+
+function update_probability_chart(min, max, data) {
+  var d = [];
+  var labels = _.range(min, max+1);
+  for(var i = min; i <= min * (max/min); i++) {
+    d.push((dicePossibilities(i, min, (max/min))*100));
+  }
+
+  pchart.data.labels = labels;
+  pchart.data.datasets[0].data = d;
+  pchart.update();
+
+  var pos = _.sum(data);
+
+  $('#sum').text(pos);
+  $('#minproba').text(d[0].toFixed(3));
+  $('#proba').text(d[pos-min].toPrecision(4));
+  $('#maxproba').text(d[Math.floor((d.length-1)/2)].toFixed(3));
+  var luck = (1/(d[pos-min]/100)).toFixed(2);
+  var luck_rounded = _.toInteger(luck);
+  luck = ((luck - luck_rounded) === 0) ? luck_rounded : luck;
+  $('#luck').text(luck);
+}
+
 //////////////////////////////////////
 //         Component inits          //
 //////////////////////////////////////
+
 $('.ui.dropdown')
   .dropdown({
     transition: 'drop'
@@ -30,69 +88,25 @@ var ctx = document.getElementById('dice-chart').getContext('2d');
 var pchart = new Chart(ctx, {
   type: 'line',
   data: {
+    labels: [],
     datasets: [
       {
         label: 'Probability',
-        data: [{
-          x: 2,
-          y: 2.72
-        }, {
-          x: 3,
-          y: 5.55
-        }, {
-          x: 4,
-          y: 8.33
-        }, {
-          x: 5,
-          y: 11.11
-        }, {
-          x: 6,
-          y: 13.89
-        }, {
-          x: 7,
-          y: 16.67
-        }, {
-          x: 8,
-          y: 13.89
-        }, {
-          x: 9,
-          y: 11.11
-        }, {
-          x: 10,
-          y: 8.33
-        }, {
-          x: 11,
-          y: 5.55
-        }, {
-          x: 12,
-          y: 2.72
-        }],
+        data: [],
         fill: false,
-        borderColor: "rgb(54, 162, 235)",
+        pointRadius: 4,
+        backgroundColor: primary_color,
         lineTension: 0.1
       }
     ]
   },
   options: {
-    responsive: true,
     scales: {
-      xAxes: [{
-        type: 'linear',
-        position: 'bottom',
-        scaleLabel: {
-          display: true,
-          labelString: "Number of dice(s)"
-        }
-      }],
-      yAxes: [{
-        ticks: {
-          min: 0,
-          max: 18,
-          callback: function(value) {
-            return value + "%"
-          }
-        }
-      }]
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
     }
   }
 });
@@ -105,13 +119,13 @@ var ctx = document.getElementById('simulation-chart').getContext('2d');
 var schart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: [1, 2],
+    labels: [],
     datasets: [
       {
         label: 'Result',
-        data: [2, 3],
+        data: [],
         fill: false,
-        backgroundColor: "rgb(255, 99, 132)",
+        backgroundColor: primary_color,
       }
     ]
   },
@@ -141,8 +155,11 @@ var sumchart = new Chart(ctx, {
     labels: ['Sum', 'Remainder'],
     datasets: [{
       label: 'Sum of the dice',
-      data: [5, 7],
-      backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)']
+      data: [],
+      backgroundColor: [primary_color, neutral_color]
     }]
   }
+});
+
+$('#btn-retry').click();
 });
